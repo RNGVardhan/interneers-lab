@@ -27,12 +27,15 @@ class ProductList(APIView):
 class ProductDetail(APIView):
     def get(self, request):
         searched_name = request.query_params.get("q", "").strip().lower()
+
         if searched_name:
             for product in products:
                 if product["name"].strip().lower() == searched_name:
                     return Response(product, status.HTTP_200_OK)
+
             return Response("No such product in the inventory.", status.HTTP_204_NO_CONTENT)
-        return Response("No parameters provided. Please search with ?q=", status.HTTP_400_BAD_REQUEST)
+
+        return Response("No parameters provided. Please search with ?q=.", status.HTTP_400_BAD_REQUEST)
 
 # To create a new product
 class ProductCreate(APIView):
@@ -49,3 +52,17 @@ class ProductCreate(APIView):
 
         products.append(data)
         return Response("Product created successfully!", status.HTTP_201_CREATED)
+
+class ProductDelete(APIView):
+    def delete(self, request):
+        searched_name = request.query_params.get("q", "").strip().lower()
+
+        if searched_name:
+            for product in products:
+                if product["name"].strip().lower() == searched_name:
+                    products.remove(product)
+                    return Response(f'Successfully deleted "{searched_name}".', status.HTTP_200_OK)
+
+            return Response("No such product in the inventory.", status.HTTP_204_NO_CONTENT)
+
+        return Response("No parameters provided. Please use ?q=.", status.HTTP_400_BAD_REQUEST)

@@ -53,4 +53,5 @@ urlpatterns = [
     path("create_product/", create_product_form),
     path("products/", views.ProductCreate.as_view()),
     path("search_product/", views.ProductDetail.as_view()),
+    path("delete_product/", views.ProductDelete.as_view()),
 ]
