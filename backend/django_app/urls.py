@@ -7,8 +7,11 @@ from django.shortcuts import redirect, render
 from rest_framework.routers import DefaultRouter
 from inventory import views
 
-router = DefaultRouter()
-router.register("", views.ProductViewSet)
+# router = DefaultRouter()
+# router.register("", views.ProductViewSet)
+
+def create_product_form(request):
+    return render(request, "create_prod.html")
 
 def hello_name(request):
     """
@@ -32,6 +35,9 @@ def show_home(request):
 def show_products(request):
     return render(request, "show_prods.html")
 
+def show_temp_products(request):
+    return
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     # path("hello/", hello_world),
@@ -39,8 +45,12 @@ urlpatterns = [
     # Example usage: /hello/?name=Bob
     # returns {"message": "Hello, Bob!"}
     # path("", include(router.urls)),
-    # path("", redirect_to_home),
+    path("", redirect_to_home),
     path("home/", show_home),
     # path("show_products/", show_products),
-    path("show_products/", include(router.urls)),
+    # path("show_products/", include(router.urls)),
+    path("show_products/", views.ProductList.as_view()),
+    path("create_product/", create_product_form),
+    path("products/", views.ProductCreate.as_view()),
+    path("search_product/", views.ProductDetail.as_view()),
 ]
