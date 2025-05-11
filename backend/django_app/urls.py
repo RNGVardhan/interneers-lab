@@ -35,8 +35,8 @@ def show_home(request):
 def show_products(request):
     return render(request, "show_prods.html")
 
-def show_temp_products(request):
-    return
+def update_product_form(request):
+    return render(request, "update_prods.html")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -51,7 +51,9 @@ urlpatterns = [
     # path("show_products/", include(router.urls)),
     path("show_products/", views.ProductList.as_view()),
     path("create_product/", create_product_form),
-    path("products/", views.ProductCreate.as_view()),
+    path("cp/", views.ProductCreate.as_view()),
     path("search_product/", views.ProductDetail.as_view()),
     path("delete_product/", views.ProductDelete.as_view()),
+    path("update_product/", update_product_form),
+    path("up/", views.ProductUpdate.as_view()),
 ]
